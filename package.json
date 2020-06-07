@@ -1,0 +1,86 @@
+{
+  "name": "js-dir-into-json",
+  "version": "1.0.0",
+  "description": "Loads content of found javascript and json files in given directory into a single structured object",
+  "author": "Martin Rafael Gonzalez <tin@devtin.io>",
+  "main": "dist/js-dir-into-json.js",
+  "scripts": {
+    "build": "rollup -c",
+    "build:live": "nodemon -w src -w test --exec npm run build",
+    "lint": "eslint --ext .js --ignore-path .gitignore src/",
+    "test": "ava --serial --verbose",
+    "release": "standard-version -a"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devtin/js-dir-into-json.git"
+  },
+  "keywords": [
+    "deep",
+    "deeply",
+    "recursively",
+    "list",
+    "scan",
+    "directory",
+    "folder",
+    "filter",
+    "pattern"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/devtin/js-dir-into-json/issues"
+  },
+  "homepage": "https://github.com/devtin/js-dir-into-json#readme",
+  "devDependencies": {
+    "@ava/babel": "^1.0.1",
+    "@rollup/plugin-commonjs": "^13.0.0",
+    "ava": "^3.8.2",
+    "eslint": "^7.2.0",
+    "esm": "^3.2.25",
+    "nodemon": "^2.0.4",
+    "rollup": "^2.14.0",
+    "standard-version": "^8.0.0"
+  },
+  "ava": {
+    "files": [
+      "test/**/*.test.js",
+      "src/**/*.unit.js",
+      "!test/fixtures"
+    ],
+    "require": [
+      "esm"
+    ],
+    "babel": true,
+    "snapshotDir": "test/snapshots"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "parser": "babel-eslint",
+    "env": {
+      "es6": true,
+      "node": true,
+      "commonjs": true
+    },
+    "globals": {
+      "BigInt": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 2018,
+      "sourceType": "module"
+    },
+    "ignorePatterns": [
+      "*.unit.js"
+    ]
+  },
+  "standard-version": {
+    "scripts": {
+      "prerelease": "npm run lint && npm run build",
+      "precommit": "npm run --silent build > /dev/null 2>&1 && git add dist/ -f"
+    }
+  },
+  "dependencies": {
+    "deep-list-dir": "^1.2.0",
+    "deepmerge": "^4.2.2",
+    "lodash": "^4.17.15"
+  }
+}
