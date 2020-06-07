@@ -1,5 +1,5 @@
 /*!
- * js-dir-into-json v1.0.0
+ * js-dir-into-json v2.0.0
  * (c) 2020 Martin Rafael Gonzalez <tin@devtin.io>
  * MIT
  */
@@ -40,11 +40,13 @@ function fileListIntoJson (fileList, { fileLoader = require, base = './' } = {})
   return finalObject
 }
 
-/* eslint-disable-next-line */
-require = require('esm')(module);
+const settings = {
+  fileLoader: require
+};
 
-async function jsDirIntoJson (directory, { extensions = ['*.js', '*.json'], fileLoader } = {}) {
-  return fileListIntoJson(await deepListDir.deepListDir(directory, { pattern: extensions }), { fileLoader, base: directory })
+async function jsDirIntoJson (directory, { extensions = ['*.js', '*.json'], fileLoader = settings.fileLoader } = {}) {
+  return fileListIntoJson(await deepListDir.deepListDir(path.resolve(process.cwd(), directory), { pattern: extensions }), { fileLoader, base: directory })
 }
 
 exports.jsDirIntoJson = jsDirIntoJson;
+exports.settings = settings;
