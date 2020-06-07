@@ -49,7 +49,10 @@ export default {
 And the following script:
 
 ```js
-const { jsDirIntoJson } = require('js-dir-into-json')
+const { jsDirIntoJson, settings } = require('js-dir-into-json')
+
+ // for esm support
+settings.fileLoader = require('esm')(module)
 
 jsDirIntoJson('<directory>',
   {
