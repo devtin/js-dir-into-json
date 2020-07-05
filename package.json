@@ -34,11 +34,11 @@
   "devDependencies": {
     "@ava/babel": "^1.0.1",
     "@rollup/plugin-commonjs": "^13.0.0",
-    "ava": "^3.8.2",
-    "eslint": "^7.2.0",
+    "ava": "^3.9.0",
+    "eslint": "^7.4.0",
     "esm": "^3.2.25",
     "nodemon": "^2.0.4",
-    "rollup": "^2.14.0",
+    "rollup": "^2.19.0",
     "standard-version": "^8.0.0"
   },
   "ava": {
@@ -79,7 +79,7 @@
     }
   },
   "dependencies": {
-    "deep-list-dir": "^1.2.0",
+    "deep-list-dir": "^1.3.0",
     "deepmerge": "^4.2.2",
     "lodash": "^4.17.15"
   }
