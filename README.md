@@ -15,9 +15,17 @@ Take the following file structure:
 ```
 <directory>
 ├── users/
+│   ├── index.js
 │   ├── maria.json
 │   └── martin.js
-└── index.js
+└── some-config.json
+```
+
+**users/index.js**
+```js
+module.exports = {
+  'some-guy': 'Un-altered'
+}
 ```
 
 **users/maria.json**
@@ -36,7 +44,7 @@ module.exports = {
 }
 ```
 
-**index.js**
+**some-config.js** (see esm support below)
 ```js
 export default {
   products: [
@@ -51,7 +59,7 @@ And the following script:
 ```js
 const { jsDirIntoJson, settings } = require('js-dir-into-json')
 
- // for esm support
+// to enable esm support
 settings.fileLoader = require('esm')(module)
 
 jsDirIntoJson('<directory>',

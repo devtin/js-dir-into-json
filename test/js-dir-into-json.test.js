@@ -13,7 +13,8 @@ test(`Imports all js/json files into a single object preserving the file structu
       'martin': {
         'name': 'Martin',
         'email': 'tin@devtin.io'
-      }
+      },
+      'olivia': 'thats me!'
     },
     'products': [
       'Product 1',
