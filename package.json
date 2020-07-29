@@ -1,6 +1,6 @@
 {
   "name": "js-dir-into-json",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Loads content of found javascript and json files in given directory into a single structured object",
   "author": "Martin Rafael Gonzalez <tin@devtin.io>",
   "main": "dist/js-dir-into-json.js",
