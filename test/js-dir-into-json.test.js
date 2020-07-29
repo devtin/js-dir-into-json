@@ -14,7 +14,8 @@ test(`Imports all js/json files into a single object preserving the file structu
         'name': 'Martin',
         'email': 'tin@devtin.io'
       },
-      'olivia': 'thats me!'
+      'olivia': 'thats me!',
+      'some-guy': 'Un-altered'
     },
     'products': [
       'Product 1',

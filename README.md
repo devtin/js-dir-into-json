@@ -73,20 +73,22 @@ jsDirIntoJson('<directory>',
 
 ```json
 {
-  "users": {
-    "maria": {
-      "name": "Maria",
-      "email": "maria@hotmail.com"
+    'users': {
+      'maria': {
+        'name': 'Maria',
+        'email': 'maria@hotmail.com'
+      },
+      'martin': {
+        'name': 'Martin',
+        'email': 'tin@devtin.io'
+      },
+      'olivia': 'thats me!',
+      'some-guy': 'Un-altered'
     },
-    "martin": {
-      "name": "Martin",
-      "email": "tin@devtin.io"
-    }
-  },
-  "products": [
-    "Product 1",
-    "Product 2"
-  ]
+    'products': [
+      'Product 1',
+      'Product 2'
+    ]
 }
 ```
 
