@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/devtin/js-dir-into-json/compare/v2.0.3...v2.1.0) (2020-08-04)
+
+
+### Features
+
+* add sync version ([3b46595](https://github.com/devtin/js-dir-into-json/commit/3b46595f0c25f1bec0b675bb0d43ccc871d71f64))
+
 ### [2.0.3](https://github.com/devtin/js-dir-into-json/compare/v2.0.2...v2.0.3) (2020-07-29)
 
 ### [2.0.2](https://github.com/devtin/js-dir-into-json/compare/v2.0.1...v2.0.2) (2020-07-29)

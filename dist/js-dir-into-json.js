@@ -1,5 +1,5 @@
 /*!
- * js-dir-into-json v2.0.3
+ * js-dir-into-json v2.1.0
  * (c) 2020 Martin Rafael Gonzalez <tin@devtin.io>
  * MIT
  */
@@ -62,5 +62,10 @@ async function jsDirIntoJson (directory, { extensions = ['*.js', '*.json'], file
   return fileListIntoJson(await deepListDir.deepListDir(path.resolve(process.cwd(), directory), { pattern: extensions }), { fileLoader, base: directory })
 }
 
+function jsDirIntoJsonSync (directory, { extensions = ['*.js', '*.json'], fileLoader = settings.fileLoader } = {}) {
+  return fileListIntoJson(deepListDir.deepListDirSync(path.resolve(process.cwd(), directory), { pattern: extensions }), { fileLoader, base: directory })
+}
+
 exports.jsDirIntoJson = jsDirIntoJson;
+exports.jsDirIntoJsonSync = jsDirIntoJsonSync;
 exports.settings = settings;
