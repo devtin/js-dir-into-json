@@ -1,9 +1,10 @@
 import test from 'ava'
 import path from 'path'
-import { jsDirIntoJson } from '../'
+import { jsDirIntoJson, jsDirIntoJsonSync } from '../'
 
 test(`Imports all js/json files into a single object preserving the file structure as the object structure`, async t => {
   const res = await jsDirIntoJson(path.join(__dirname, './benchmark'))
+  const resSync = jsDirIntoJsonSync(path.join(__dirname, './benchmark'))
   t.deepEqual(res, {
     'users': {
       'maria': {
@@ -22,4 +23,5 @@ test(`Imports all js/json files into a single object preserving the file structu
       'Product 2'
     ]
   })
+  t.deepEqual(res, resSync)
 })
