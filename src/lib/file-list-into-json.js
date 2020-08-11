@@ -23,12 +23,13 @@ const unwrapDefaults = (obj) => {
  * @param {String[]} fileList - List of js / json files
  * @param {Object} [options]
  * @param {Function|NodeRequire} [options.fileLoader=esm] - Function that resolves the files
+ * @param {Function} [options.path2dot=dirPath2ObjPath] - Function that receives the file path and resolves a dot notation path
  * @return {Promise<{}>}
  */
-export function fileListIntoJson (fileList, { fileLoader = require, base = './' } = {}) {
+export function fileListIntoJson (fileList, { fileLoader = require, base = './', path2dot = dirPath2ObjPath } = {}) {
   let finalObject = {}
   fileList.forEach(jsFile => {
-    const dotProp = dirPath2ObjPath(path.relative(base, jsFile))
+    const dotProp = path2dot(path.relative(base, jsFile))
     let fileContent = dotProp ? set({}, dotProp, fileLoader(jsFile)) : fileLoader(jsFile)
 
     fileContent = unwrapDefaults(fileContent)
