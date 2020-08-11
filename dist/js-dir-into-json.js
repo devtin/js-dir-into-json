@@ -1,5 +1,5 @@
 /*!
- * js-dir-into-json v2.1.0
+ * js-dir-into-json v2.2.0
  * (c) 2020 Martin Rafael Gonzalez <tin@devtin.io>
  * MIT
  */
@@ -40,12 +40,13 @@ const unwrapDefaults = (obj) => {
  * @param {String[]} fileList - List of js / json files
  * @param {Object} [options]
  * @param {Function|NodeRequire} [options.fileLoader=esm] - Function that resolves the files
+ * @param {Function} [options.path2dot=dirPath2ObjPath] - Function that receives the file path and resolves a dot notation path
  * @return {Promise<{}>}
  */
-function fileListIntoJson (fileList, { fileLoader = require, base = './' } = {}) {
+function fileListIntoJson (fileList, { fileLoader = require, base = './', path2dot = dirPath2ObjPath } = {}) {
   let finalObject = {};
   fileList.forEach(jsFile => {
-    const dotProp = dirPath2ObjPath(path.relative(base, jsFile));
+    const dotProp = path2dot(path.relative(base, jsFile));
     let fileContent = dotProp ? set({}, dotProp, fileLoader(jsFile)) : fileLoader(jsFile);
 
     fileContent = unwrapDefaults(fileContent);
@@ -58,12 +59,12 @@ const settings = {
   fileLoader: require
 };
 
-async function jsDirIntoJson (directory, { extensions = ['*.js', '*.json'], fileLoader = settings.fileLoader } = {}) {
-  return fileListIntoJson(await deepListDir.deepListDir(path.resolve(process.cwd(), directory), { pattern: extensions }), { fileLoader, base: directory })
+async function jsDirIntoJson (directory, { extensions = ['*.js', '*.json'], fileLoader = settings.fileLoader, path2dot } = {}) {
+  return fileListIntoJson(await deepListDir.deepListDir(path.resolve(process.cwd(), directory), { pattern: extensions }), { fileLoader, base: directory, path2dot })
 }
 
-function jsDirIntoJsonSync (directory, { extensions = ['*.js', '*.json'], fileLoader = settings.fileLoader } = {}) {
-  return fileListIntoJson(deepListDir.deepListDirSync(path.resolve(process.cwd(), directory), { pattern: extensions }), { fileLoader, base: directory })
+function jsDirIntoJsonSync (directory, { extensions = ['*.js', '*.json'], fileLoader = settings.fileLoader, path2dot } = {}) {
+  return fileListIntoJson(deepListDir.deepListDirSync(path.resolve(process.cwd(), directory), { pattern: extensions }), { fileLoader, base: directory, path2dot })
 }
 
 exports.jsDirIntoJson = jsDirIntoJson;

@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/devtin/js-dir-into-json/compare/v2.1.0...v2.2.0) (2020-08-11)
+
+
+### Features
+
+* export path2obj ([da596c9](https://github.com/devtin/js-dir-into-json/commit/da596c90bb083bfa60ab5b5b8d9c60640bcbf297))
+
 ## [2.1.0](https://github.com/devtin/js-dir-into-json/compare/v2.0.3...v2.1.0) (2020-08-04)
 
 
