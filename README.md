@@ -65,6 +65,8 @@ settings.fileLoader = require('esm')(module)
 jsDirIntoJson('<directory>',
   {
     // extensions: ['*.js', '*.json'], // minimatch or RegExp
+    // path2dot: dirPath2ObjPath, // see src/lib/dir-path-2-obj-path.js
+    // fileLoader: require('esm') (defaults to require)
   }
 ).then(console.log)
 ```

@@ -19,6 +19,11 @@ export default [
         format: 'cjs',
         banner
       },
+      {
+        file: `dist/js-dir-into-json.esm.js`,
+        format: 'esm',
+        banner
+      },
     ],
     plugins: [commonjs()]
   }
