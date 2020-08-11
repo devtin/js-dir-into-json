@@ -3,18 +3,12 @@
  * (c) 2020 Martin Rafael Gonzalez <tin@devtin.io>
  * MIT
  */
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var deepListDir = require('deep-list-dir');
-var merge = _interopDefault(require('deepmerge'));
-var path = _interopDefault(require('path'));
-var set = _interopDefault(require('lodash/set'));
-var camelCase = _interopDefault(require('lodash/camelCase.js'));
-var trim = _interopDefault(require('lodash/trim'));
+import { deepListDir, deepListDirSync } from 'deep-list-dir';
+import merge from 'deepmerge';
+import path from 'path';
+import set from 'lodash/set';
+import camelCase from 'lodash/camelCase.js';
+import trim from 'lodash/trim';
 
 function dirPath2ObjPath (dirPath = '') {
   return trim(dirPath, '/').replace(/((^|\/)index)?\.js(on)?$/i, '').split('/').map(camelCase).join('.')
@@ -60,13 +54,11 @@ const settings = {
 };
 
 async function jsDirIntoJson (directory, { extensions = ['*.js', '*.json'], fileLoader = settings.fileLoader, path2dot } = {}) {
-  return fileListIntoJson(await deepListDir.deepListDir(path.resolve(process.cwd(), directory), { pattern: extensions }), { fileLoader, base: directory, path2dot })
+  return fileListIntoJson(await deepListDir(path.resolve(process.cwd(), directory), { pattern: extensions }), { fileLoader, base: directory, path2dot })
 }
 
 function jsDirIntoJsonSync (directory, { extensions = ['*.js', '*.json'], fileLoader = settings.fileLoader, path2dot } = {}) {
-  return fileListIntoJson(deepListDir.deepListDirSync(path.resolve(process.cwd(), directory), { pattern: extensions }), { fileLoader, base: directory, path2dot })
+  return fileListIntoJson(deepListDirSync(path.resolve(process.cwd(), directory), { pattern: extensions }), { fileLoader, base: directory, path2dot })
 }
 
-exports.jsDirIntoJson = jsDirIntoJson;
-exports.jsDirIntoJsonSync = jsDirIntoJsonSync;
-exports.settings = settings;
+export { jsDirIntoJson, jsDirIntoJsonSync, settings };
