@@ -20,7 +20,7 @@ export default [
         banner
       },
       {
-        file: `dist/js-dir-into-json.esm.js`,
+        file: `dist/js-dir-into-json.mjs`,
         format: 'esm',
         banner
       },

@@ -4,7 +4,7 @@
   "description": "Loads content of found javascript and json files in given directory into a single structured object",
   "author": "Martin Rafael Gonzalez <tin@devtin.io>",
   "main": "dist/js-dir-into-json.js",
-  "module": "dist/js-dir-into-json.esm.js",
+  "module": "dist/js-dir-into-json.mjs",
   "scripts": {
     "build": "rollup -c",
     "build:live": "nodemon -w src -w test --exec npm run build",
