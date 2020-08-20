@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.0](https://github.com/devtin/js-dir-into-json/compare/v2.3.0...v2.4.0) (2020-08-20)
+
+
+### Features
+
+* esm support ([4b896dd](https://github.com/devtin/js-dir-into-json/commit/4b896ddbc5df1d50bb7d9f645150e4eef2100bba))
+
 ## [2.3.0](https://github.com/devtin/js-dir-into-json/compare/v2.2.0...v2.3.0) (2020-08-11)
 
 
