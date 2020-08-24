@@ -13,7 +13,9 @@ const unwrapDefaults = (obj) => {
   }
 
   Object.keys(obj).forEach(prop => {
-    obj[prop] = unwrapDefaults(obj[prop])
+    if (Object.getOwnPropertyDescriptor(obj, prop).writable) {
+      obj[prop] = unwrapDefaults(obj[prop])
+    }
   })
 
   return obj
