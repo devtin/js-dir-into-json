@@ -1,5 +1,5 @@
 /*!
- * js-dir-into-json v2.4.0
+ * js-dir-into-json v2.4.1
  * (c) 2020 Martin Rafael Gonzalez <tin@devtin.io>
  * MIT
  */
@@ -24,7 +24,9 @@ const unwrapDefaults = (obj) => {
   }
 
   Object.keys(obj).forEach(prop => {
-    obj[prop] = unwrapDefaults(obj[prop]);
+    if (Object.getOwnPropertyDescriptor(obj, prop).writable) {
+      obj[prop] = unwrapDefaults(obj[prop]);
+    }
   });
 
   return obj

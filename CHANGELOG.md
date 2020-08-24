@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.4.1](https://github.com/devtin/js-dir-into-json/compare/v2.4.0...v2.4.1) (2020-08-24)
+
+
+### Bug Fixes
+
+* prevent writing read-only props ([add7e48](https://github.com/devtin/js-dir-into-json/commit/add7e4829b4a8ed8b86586474f849b72ee8e8a2c))
+
 ## [2.4.0](https://github.com/devtin/js-dir-into-json/compare/v2.3.0...v2.4.0) (2020-08-20)
 
 
