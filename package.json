@@ -1,6 +1,6 @@
 {
   "name": "js-dir-into-json",
-  "version": "2.4.1",
+  "version": "2.5.0",
   "description": "Loads content of found javascript and json files in given directory into a single structured object",
   "author": "Martin Rafael Gonzalez <tin@devtin.io>",
   "main": "dist/js-dir-into-json.js",
@@ -35,12 +35,12 @@
   "devDependencies": {
     "@ava/babel": "^1.0.1",
     "@rollup/plugin-commonjs": "^15.0.0",
-    "ava": "^3.11.1",
+    "ava": "^3.12.1",
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.7.0",
+    "eslint": "^7.8.1",
     "esm": "^3.2.25",
     "nodemon": "^2.0.4",
-    "rollup": "^2.26.4",
+    "rollup": "^2.26.9",
     "standard-version": "^9.0.0"
   },
   "ava": {
@@ -83,6 +83,7 @@
   "dependencies": {
     "deep-list-dir": "^1.4.1",
     "deepmerge": "^4.2.2",
+    "is-plain-object": "^4.1.1",
     "lodash": "^4.17.20"
   }
 }

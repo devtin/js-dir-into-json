@@ -1,5 +1,5 @@
 /*!
- * js-dir-into-json v2.4.1
+ * js-dir-into-json v2.5.0
  * (c) 2020 Martin Rafael Gonzalez <tin@devtin.io>
  * MIT
  */
@@ -9,6 +9,7 @@ import path from 'path';
 import set from 'lodash/set';
 import camelCase from 'lodash/camelCase.js';
 import trim from 'lodash/trim';
+import isPlainObject from 'is-plain-object';
 
 function dirPath2ObjPath (dirPath = '') {
   return trim(dirPath, '/').replace(/((^|\/)index)?\.js(on)?$/i, '').split('/').map(camelCase).join('.')
@@ -46,7 +47,7 @@ function fileListIntoJson (fileList, { fileLoader = require, base = './', path2d
     let fileContent = dotProp ? set({}, dotProp, fileLoader(jsFile)) : fileLoader(jsFile);
 
     fileContent = unwrapDefaults(fileContent);
-    finalObject = merge(finalObject, fileContent);
+    finalObject = merge(finalObject, fileContent, { isMergeableObject: isPlainObject });
   });
   return finalObject
 }

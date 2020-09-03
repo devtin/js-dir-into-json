@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.5.0](https://github.com/devtin/js-dir-into-json/compare/v2.4.1...v2.5.0) (2020-09-03)
+
+
+### Features
+
+* merge only plain objects ([7048be9](https://github.com/devtin/js-dir-into-json/commit/7048be985ed3d531366f11cb27f865e90c794b1d))
+
 ### [2.4.1](https://github.com/devtin/js-dir-into-json/compare/v2.4.0...v2.4.1) (2020-08-24)
 
 
