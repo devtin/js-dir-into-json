@@ -1,4 +1,4 @@
-# js-dir-into-object
+# js-dir-into-json
 > Loads content of found javascript and json files in given directory into a single structured object
 
 <a href="https://www.npmjs.com/package/js-dir-into-json" target="_blank"><img src="https://img.shields.io/npm/v/js-dir-into-json.svg" alt="Version"></a>
