@@ -2,6 +2,7 @@ import merge from 'deepmerge'
 import path from 'path'
 import set from 'lodash/set'
 import { dirPath2ObjPath } from './dir-path-2-obj-path.js'
+import isPlainObject from 'is-plain-object'
 
 const unwrapDefaults = (obj) => {
   if (typeof obj !== 'object' || Array.isArray(obj) || obj === null) {
@@ -35,7 +36,7 @@ export function fileListIntoJson (fileList, { fileLoader = require, base = './',
     let fileContent = dotProp ? set({}, dotProp, fileLoader(jsFile)) : fileLoader(jsFile)
 
     fileContent = unwrapDefaults(fileContent)
-    finalObject = merge(finalObject, fileContent)
+    finalObject = merge(finalObject, fileContent, { isMergeableObject: isPlainObject })
   })
   return finalObject
 }
