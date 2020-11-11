@@ -12,7 +12,9 @@ test(`Imports all js/json files into a single object preserving the file structu
         'email': 'maria@hotmail.com'
       },
       'martin': {
-        'name': 'Martin',
+        'firstName': 'Martin',
+        'lastName': 'Gonzalez',
+        'fullName': 'Martin Gonzalez',
         'email': 'tin@devtin.io'
       },
       'olivia': 'thats me!',
@@ -24,4 +26,10 @@ test(`Imports all js/json files into a single object preserving the file structu
     ]
   })
   t.deepEqual(res, resSync)
+})
+
+test('Preserves getters / setters', async t => {
+  const res = await jsDirIntoJson(path.join(__dirname, './benchmark'))
+  res.users.martin.firstName = 'Fulano'
+  t.is(res.users.martin.fullName, 'Fulano Gonzalez')
 })

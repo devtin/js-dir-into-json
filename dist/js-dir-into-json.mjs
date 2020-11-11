@@ -9,7 +9,7 @@ import path from 'path';
 import set from 'lodash/set';
 import camelCase from 'lodash/camelCase.js';
 import trim from 'lodash/trim';
-import isPlainObject from 'is-plain-object';
+import { isPlainObject } from 'is-plain-object';
 
 function dirPath2ObjPath (dirPath = '') {
   return trim(dirPath, '/').replace(/((^|\/)index)?\.js(on)?$/i, '').split('/').map(camelCase).join('.')
@@ -33,6 +33,24 @@ const unwrapDefaults = (obj) => {
   return obj
 };
 
+const replaceVirtuals = (src, dst) => {
+  if (!src || !dst) {
+    return
+  }
+  Object.keys(src).forEach(prop => {
+    const objDesc = Object.getOwnPropertyDescriptor(src, prop);
+    if (typeof objDesc.get === 'function' || typeof objDesc.set === 'function') {
+      delete dst[prop];
+      Object.defineProperties(dst, {
+        [prop]: objDesc
+      });
+    } else if (typeof src[prop] === 'object' && !Array.isArray(src[prop])) {
+      replaceVirtuals(src[prop], dst[prop]);
+    }
+  });
+};
+
+
 /**
  * @param {String[]} fileList - List of js / json files
  * @param {Object} [options]
@@ -42,13 +60,23 @@ const unwrapDefaults = (obj) => {
  */
 function fileListIntoJson (fileList, { fileLoader = require, base = './', path2dot = dirPath2ObjPath } = {}) {
   let finalObject = {};
+  const objsToReplaceVirtuals = [];
   fileList.forEach(jsFile => {
     const dotProp = path2dot(path.relative(base, jsFile));
     let fileContent = dotProp ? set({}, dotProp, fileLoader(jsFile)) : fileLoader(jsFile);
 
     fileContent = unwrapDefaults(fileContent);
-    finalObject = merge(finalObject, fileContent, { isMergeableObject: isPlainObject });
+    finalObject = merge(finalObject, fileContent, {
+      isMergeableObject: isPlainObject
+    });
+    objsToReplaceVirtuals.push(fileContent);
   });
+
+  objsToReplaceVirtuals.forEach(obj => {
+    replaceVirtuals(obj, finalObject);
+  });
+
+  // todo: reset all virtuals
   return finalObject
 }
 

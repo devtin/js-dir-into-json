@@ -22,7 +22,6 @@ var path__default = /*#__PURE__*/_interopDefaultLegacy(path);
 var set__default = /*#__PURE__*/_interopDefaultLegacy(set);
 var camelCase__default = /*#__PURE__*/_interopDefaultLegacy(camelCase);
 var trim__default = /*#__PURE__*/_interopDefaultLegacy(trim);
-var isPlainObject__default = /*#__PURE__*/_interopDefaultLegacy(isPlainObject);
 
 function dirPath2ObjPath (dirPath = '') {
   return trim__default['default'](dirPath, '/').replace(/((^|\/)index)?\.js(on)?$/i, '').split('/').map(camelCase__default['default']).join('.')
@@ -46,6 +45,24 @@ const unwrapDefaults = (obj) => {
   return obj
 };
 
+const replaceVirtuals = (src, dst) => {
+  if (!src || !dst) {
+    return
+  }
+  Object.keys(src).forEach(prop => {
+    const objDesc = Object.getOwnPropertyDescriptor(src, prop);
+    if (typeof objDesc.get === 'function' || typeof objDesc.set === 'function') {
+      delete dst[prop];
+      Object.defineProperties(dst, {
+        [prop]: objDesc
+      });
+    } else if (typeof src[prop] === 'object' && !Array.isArray(src[prop])) {
+      replaceVirtuals(src[prop], dst[prop]);
+    }
+  });
+};
+
+
 /**
  * @param {String[]} fileList - List of js / json files
  * @param {Object} [options]
@@ -55,13 +72,23 @@ const unwrapDefaults = (obj) => {
  */
 function fileListIntoJson (fileList, { fileLoader = require, base = './', path2dot = dirPath2ObjPath } = {}) {
   let finalObject = {};
+  const objsToReplaceVirtuals = [];
   fileList.forEach(jsFile => {
     const dotProp = path2dot(path__default['default'].relative(base, jsFile));
     let fileContent = dotProp ? set__default['default']({}, dotProp, fileLoader(jsFile)) : fileLoader(jsFile);
 
     fileContent = unwrapDefaults(fileContent);
-    finalObject = merge__default['default'](finalObject, fileContent, { isMergeableObject: isPlainObject__default['default'] });
+    finalObject = merge__default['default'](finalObject, fileContent, {
+      isMergeableObject: isPlainObject.isPlainObject
+    });
+    objsToReplaceVirtuals.push(fileContent);
   });
+
+  objsToReplaceVirtuals.forEach(obj => {
+    replaceVirtuals(obj, finalObject);
+  });
+
+  // todo: reset all virtuals
   return finalObject
 }
 
