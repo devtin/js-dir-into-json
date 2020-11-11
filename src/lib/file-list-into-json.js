@@ -2,7 +2,7 @@ import merge from 'deepmerge'
 import path from 'path'
 import set from 'lodash/set'
 import { dirPath2ObjPath } from './dir-path-2-obj-path.js'
-import isPlainObject from 'is-plain-object'
+import { isPlainObject } from 'is-plain-object'
 
 const unwrapDefaults = (obj) => {
   if (typeof obj !== 'object' || Array.isArray(obj) || obj === null) {
