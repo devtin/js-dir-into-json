@@ -31,17 +31,23 @@
   "bugs": {
     "url": "https://github.com/devtin/js-dir-into-json/issues"
   },
+  "dependencies": {
+    "deep-list-dir": "^1.4.3",
+    "deepmerge": "^4.2.2",
+    "is-plain-object": "^5.0.0",
+    "lodash": "^4.17.20"
+  },
   "homepage": "https://github.com/devtin/js-dir-into-json#readme",
   "devDependencies": {
     "@ava/babel": "^1.0.1",
-    "@rollup/plugin-commonjs": "^16.0.0",
-    "ava": "^3.13.0",
+    "@rollup/plugin-commonjs": "^17.0.0",
+    "ava": "^3.15.0",
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.13.0",
+    "eslint": "^7.18.0",
     "esm": "^3.2.25",
-    "nodemon": "^2.0.6",
-    "rollup": "^2.33.1",
-    "standard-version": "^9.0.0"
+    "nodemon": "^2.0.7",
+    "rollup": "^2.38.0",
+    "standard-version": "^9.1.0"
   },
   "ava": {
     "files": [
@@ -79,11 +85,5 @@
       "prerelease": "npm run lint && npm run build",
       "precommit": "npm run --silent build > /dev/null 2>&1 && git add dist/ -f"
     }
-  },
-  "dependencies": {
-    "deep-list-dir": "^1.4.1",
-    "deepmerge": "^4.2.2",
-    "is-plain-object": "^5.0.0",
-    "lodash": "^4.17.20"
   }
 }
