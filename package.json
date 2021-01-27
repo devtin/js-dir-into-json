@@ -1,7 +1,7 @@
 {
   "name": "js-dir-into-json",
   "version": "2.6.0",
-  "description": "Loads content of found javascript and json files in given directory into a single structured object",
+  "description": "Recursively loads content of found JavaScript and JSON files in given directory into a single structured object",
   "author": "Martin Rafael Gonzalez <tin@devtin.io>",
   "main": "dist/js-dir-into-json.js",
   "module": "dist/js-dir-into-json.mjs",
@@ -19,13 +19,15 @@
   "keywords": [
     "deep",
     "deeply",
+    "recursive",
     "recursively",
+    "load",
     "list",
-    "scan",
-    "directory",
+    "javascript",
+    "json",
+    "file",
     "folder",
-    "filter",
-    "pattern"
+    "structure"
   ],
   "license": "MIT",
   "bugs": {
