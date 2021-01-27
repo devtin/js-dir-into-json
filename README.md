@@ -1,12 +1,16 @@
 # js-dir-into-json
-> Loads content of found javascript and json files in given directory into a single structured object
+> Recursively loads content of found JavaScript and JSON files in given directory into a single structured object
 
 <a href="https://www.npmjs.com/package/js-dir-into-json" target="_blank"><img src="https://img.shields.io/npm/v/js-dir-into-json.svg" alt="Version"></a>
 [![tests](https://github.com/devtin/js-dir-into-json/workflows/test/badge.svg)](https://github.com/devtin/js-dir-into-json/actions)
 
-This module deeply loads all `*.js` and `*.json` (configurable via `extensions`) files in given `directory` and creates
-a single object preserving the file structure as the properties of the object, appending default exported content to
-each endpoint.
+This module recursively loads exported content of all `*.js` and `*.json` files (configurable via `extensions`) found in
+given `directory` using given `fileLoader` (defaults to `require`) creating a single object that preservers the file
+structure of the loaded content as the property path, transforming the file and folder names using given
+`pathTransformer` function (defaults to
+lodash→<a href="https://lodash.com/docs/4.17.15#camelCase" target="_blank">camelCase</a>).
+
+Useful to split what could be a big configuration object into a file / folder structure.
 
 ## Example
 
@@ -57,10 +61,7 @@ export default {
 And the following script:
 
 ```js
-const { jsDirIntoJson, settings } = require('js-dir-into-json')
-
-// to enable esm support
-settings.fileLoader = require('esm')(module)
+const { jsDirIntoJson } = require('js-dir-into-json')
 
 jsDirIntoJson('<directory>',
   {
@@ -68,13 +69,8 @@ jsDirIntoJson('<directory>',
     // path2dot: dirPath2ObjPath, // see src/lib/dir-path-2-obj-path.js
     // fileLoader: require('esm') (defaults to require)
   }
-).then(console.log)
-```
-
-**produces the following output**
-
-```json
-{
+).then(obj => {
+  t.deepEquals(obj, {
     "users": {
       "maria": {
         "name": "Maria",
@@ -87,11 +83,14 @@ jsDirIntoJson('<directory>',
       "olivia": "thats me!",
       "some-guy": "Un-altered"
     },
-    "products": [
-      "Product 1",
-      "Product 2"
-    ]
-}
+    "someConfig": {
+      "plugins": [
+        "plugin-1",
+        "plugin-2"
+      ]
+    }
+  });
+});
 ```
 
 * * *
