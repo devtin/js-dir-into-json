@@ -1,6 +1,7 @@
 import merge from 'deepmerge'
 import path from 'path'
 import set from 'lodash/set'
+import camelCase from 'lodash/camelCase.js'
 import { dirPath2ObjPath } from './dir-path-2-obj-path.js'
 import { isPlainObject } from 'is-plain-object'
 
@@ -44,14 +45,14 @@ const replaceVirtuals = (src, dst) => {
  * @param {String[]} fileList - List of js / json files
  * @param {Object} [options]
  * @param {Function|NodeRequire} [options.fileLoader=esm] - Function that resolves the files
- * @param {Function} [options.path2dot=dirPath2ObjPath] - Function that receives the file path and resolves a dot notation path
+ * @param {Function} [options.pathTransformer=lodash.camelCase] - Function that receives and can transform the file path name
  * @return {Promise<{}>}
  */
-export function fileListIntoJson (fileList, { fileLoader = require, base = './', path2dot = dirPath2ObjPath } = {}) {
+export function fileListIntoJson (fileList, { fileLoader = require, base = './', pathTransformer = camelCase } = {}) {
   let finalObject = {}
   const objsToReplaceVirtuals = []
   fileList.forEach(jsFile => {
-    const dotProp = path2dot(path.relative(base, jsFile))
+    const dotProp = dirPath2ObjPath(path.relative(base, jsFile), pathTransformer)
     let fileContent = dotProp ? set({}, dotProp, fileLoader(jsFile)) : fileLoader(jsFile)
 
     fileContent = unwrapDefaults(fileContent)

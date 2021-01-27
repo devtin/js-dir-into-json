@@ -20,10 +20,16 @@ test(`Imports all js/json files into a single object preserving the file structu
       'olivia': 'thats me!',
       'some-guy': 'Un-altered'
     },
-    'products': [
+    products: [
       'Product 1',
       'Product 2'
-    ]
+    ],
+    someConfig: {
+      plugins: [
+        'plugin-1',
+        'plugin-2'
+      ]
+    }
   })
   t.deepEqual(res, resSync)
 })

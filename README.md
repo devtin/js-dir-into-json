@@ -21,7 +21,8 @@ Take the following file structure:
 ├── users/
 │   ├── index.js
 │   ├── maria.json
-│   └── martin.js
+│   ├── martin.js
+│   └── maria.json
 └── some-config.json
 ```
 
@@ -51,9 +52,9 @@ module.exports = {
 **some-config.js** (see esm support below)
 ```js
 export default {
-  products: [
-    'Product 1',
-    'Product 2'
+  plugins: [
+    'plugin-1',
+    'plugin-2'
   ]
 }
 ```
@@ -66,8 +67,8 @@ const { jsDirIntoJson } = require('js-dir-into-json')
 jsDirIntoJson('<directory>',
   {
     // extensions: ['*.js', '*.json'], // minimatch or RegExp
-    // path2dot: dirPath2ObjPath, // see src/lib/dir-path-2-obj-path.js
-    // fileLoader: require('esm') (defaults to require)
+    // pathTransformer: default to lodash camelCase
+    // fileLoader: default to require (or fileLoader = require('esm')(module) for esm support)
   }
 ).then(obj => {
   t.deepEquals(obj, {
