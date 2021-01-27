@@ -1,6 +1,6 @@
 /*!
- * js-dir-into-json v2.6.0
- * (c) 2020 Martin Rafael Gonzalez <tin@devtin.io>
+ * js-dir-into-json v2.7.0
+ * (c) 2020-2021 Martin Rafael Gonzalez <tin@devtin.io>
  * MIT
  */
 'use strict';
@@ -23,8 +23,10 @@ var set__default = /*#__PURE__*/_interopDefaultLegacy(set);
 var camelCase__default = /*#__PURE__*/_interopDefaultLegacy(camelCase);
 var trim__default = /*#__PURE__*/_interopDefaultLegacy(trim);
 
-function dirPath2ObjPath (dirPath = '') {
-  return trim__default['default'](dirPath, '/').replace(/((^|\/)index)?\.js(on)?$/i, '').split('/').map(camelCase__default['default']).join('.')
+const proxy = p => p;
+
+function dirPath2ObjPath (dirPath = '', pathTransformer) {
+  return trim__default['default'](dirPath, '/').replace(/((^|\/)index)?\.js(on)?$/i, '').split('/').map(pathTransformer || proxy).join('.')
 }
 
 const unwrapDefaults = (obj) => {
@@ -67,14 +69,14 @@ const replaceVirtuals = (src, dst) => {
  * @param {String[]} fileList - List of js / json files
  * @param {Object} [options]
  * @param {Function|NodeRequire} [options.fileLoader=esm] - Function that resolves the files
- * @param {Function} [options.path2dot=dirPath2ObjPath] - Function that receives the file path and resolves a dot notation path
+ * @param {Function} [options.pathTransformer=lodash.camelCase] - Function that receives and can transform the file path name
  * @return {Promise<{}>}
  */
-function fileListIntoJson (fileList, { fileLoader = require, base = './', path2dot = dirPath2ObjPath } = {}) {
+function fileListIntoJson (fileList, { fileLoader = require, base = './', pathTransformer = camelCase__default['default'] } = {}) {
   let finalObject = {};
   const objsToReplaceVirtuals = [];
   fileList.forEach(jsFile => {
-    const dotProp = path2dot(path__default['default'].relative(base, jsFile));
+    const dotProp = dirPath2ObjPath(path__default['default'].relative(base, jsFile), pathTransformer);
     let fileContent = dotProp ? set__default['default']({}, dotProp, fileLoader(jsFile)) : fileLoader(jsFile);
 
     fileContent = unwrapDefaults(fileContent);
@@ -96,12 +98,12 @@ const settings = {
   fileLoader: require
 };
 
-async function jsDirIntoJson (directory, { extensions = ['*.js', '*.json'], fileLoader = settings.fileLoader, path2dot } = {}) {
-  return fileListIntoJson(await deepListDir.deepListDir(path__default['default'].resolve(process.cwd(), directory), { pattern: extensions }), { fileLoader, base: directory, path2dot })
+async function jsDirIntoJson (directory, { extensions = ['*.js', '*.json'], fileLoader = settings.fileLoader, pathTransformer } = {}) {
+  return fileListIntoJson(await deepListDir.deepListDir(path__default['default'].resolve(process.cwd(), directory), { pattern: extensions }), { fileLoader, base: directory, pathTransformer })
 }
 
-function jsDirIntoJsonSync (directory, { extensions = ['*.js', '*.json'], fileLoader = settings.fileLoader, path2dot } = {}) {
-  return fileListIntoJson(deepListDir.deepListDirSync(path__default['default'].resolve(process.cwd(), directory), { pattern: extensions }), { fileLoader, base: directory, path2dot })
+function jsDirIntoJsonSync (directory, { extensions = ['*.js', '*.json'], fileLoader = settings.fileLoader, pathTransformer } = {}) {
+  return fileListIntoJson(deepListDir.deepListDirSync(path__default['default'].resolve(process.cwd(), directory), { pattern: extensions }), { fileLoader, base: directory, pathTransformer })
 }
 
 exports.jsDirIntoJson = jsDirIntoJson;

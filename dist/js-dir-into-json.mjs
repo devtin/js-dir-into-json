@@ -1,6 +1,6 @@
 /*!
- * js-dir-into-json v2.6.0
- * (c) 2020 Martin Rafael Gonzalez <tin@devtin.io>
+ * js-dir-into-json v2.7.0
+ * (c) 2020-2021 Martin Rafael Gonzalez <tin@devtin.io>
  * MIT
  */
 import { deepListDir, deepListDirSync } from 'deep-list-dir';
@@ -11,8 +11,10 @@ import camelCase from 'lodash/camelCase.js';
 import trim from 'lodash/trim';
 import { isPlainObject } from 'is-plain-object';
 
-function dirPath2ObjPath (dirPath = '') {
-  return trim(dirPath, '/').replace(/((^|\/)index)?\.js(on)?$/i, '').split('/').map(camelCase).join('.')
+const proxy = p => p;
+
+function dirPath2ObjPath (dirPath = '', pathTransformer) {
+  return trim(dirPath, '/').replace(/((^|\/)index)?\.js(on)?$/i, '').split('/').map(pathTransformer || proxy).join('.')
 }
 
 const unwrapDefaults = (obj) => {
@@ -55,14 +57,14 @@ const replaceVirtuals = (src, dst) => {
  * @param {String[]} fileList - List of js / json files
  * @param {Object} [options]
  * @param {Function|NodeRequire} [options.fileLoader=esm] - Function that resolves the files
- * @param {Function} [options.path2dot=dirPath2ObjPath] - Function that receives the file path and resolves a dot notation path
+ * @param {Function} [options.pathTransformer=lodash.camelCase] - Function that receives and can transform the file path name
  * @return {Promise<{}>}
  */
-function fileListIntoJson (fileList, { fileLoader = require, base = './', path2dot = dirPath2ObjPath } = {}) {
+function fileListIntoJson (fileList, { fileLoader = require, base = './', pathTransformer = camelCase } = {}) {
   let finalObject = {};
   const objsToReplaceVirtuals = [];
   fileList.forEach(jsFile => {
-    const dotProp = path2dot(path.relative(base, jsFile));
+    const dotProp = dirPath2ObjPath(path.relative(base, jsFile), pathTransformer);
     let fileContent = dotProp ? set({}, dotProp, fileLoader(jsFile)) : fileLoader(jsFile);
 
     fileContent = unwrapDefaults(fileContent);
@@ -84,12 +86,12 @@ const settings = {
   fileLoader: require
 };
 
-async function jsDirIntoJson (directory, { extensions = ['*.js', '*.json'], fileLoader = settings.fileLoader, path2dot } = {}) {
-  return fileListIntoJson(await deepListDir(path.resolve(process.cwd(), directory), { pattern: extensions }), { fileLoader, base: directory, path2dot })
+async function jsDirIntoJson (directory, { extensions = ['*.js', '*.json'], fileLoader = settings.fileLoader, pathTransformer } = {}) {
+  return fileListIntoJson(await deepListDir(path.resolve(process.cwd(), directory), { pattern: extensions }), { fileLoader, base: directory, pathTransformer })
 }
 
-function jsDirIntoJsonSync (directory, { extensions = ['*.js', '*.json'], fileLoader = settings.fileLoader, path2dot } = {}) {
-  return fileListIntoJson(deepListDirSync(path.resolve(process.cwd(), directory), { pattern: extensions }), { fileLoader, base: directory, path2dot })
+function jsDirIntoJsonSync (directory, { extensions = ['*.js', '*.json'], fileLoader = settings.fileLoader, pathTransformer } = {}) {
+  return fileListIntoJson(deepListDirSync(path.resolve(process.cwd(), directory), { pattern: extensions }), { fileLoader, base: directory, pathTransformer })
 }
 
 export { jsDirIntoJson, jsDirIntoJsonSync, settings };

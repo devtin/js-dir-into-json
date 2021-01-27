@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.7.0](https://github.com/devtin/js-dir-into-json/compare/v2.6.0...v2.7.0) (2021-01-27)
+
+
+### Features
+
+* introduce path transformer ([04db16d](https://github.com/devtin/js-dir-into-json/commit/04db16d2aeb30264852bfdda72ece6894a5fd895))
+
 ## [2.6.0](https://github.com/devtin/js-dir-into-json/compare/v2.5.1...v2.6.0) (2020-11-11)
 
 
