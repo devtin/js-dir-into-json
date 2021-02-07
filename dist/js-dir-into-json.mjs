@@ -1,5 +1,5 @@
 /*!
- * js-dir-into-json v2.7.0
+ * js-dir-into-json v2.7.1
  * (c) 2020-2021 Martin Rafael Gonzalez <tin@devtin.io>
  * MIT
  */
